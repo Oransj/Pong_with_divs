@@ -1,0 +1,30 @@
+#game-functinality {
+    position: relative;
+}
+
+#board {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    height: 85vh;
+    width: 85vw;
+
+    background-color: aqua;
+    border: 1px solid black;
+}
+
+.player {
+    height: 100px;
+    width: 25px;
+    background-color: black;
+    /* border: 1px solid black; */
+}
+
+#ball {
+    height: 25px;
+    width: 25px;
+    background-color: rebeccapurple;
+}
