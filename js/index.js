@@ -1,4 +1,10 @@
-var playerSpeed = [1.5, 1.5]
+var playerSpeed = [1.5, 1.5];
+
+var singlePlayer = true;
+
+var counter = 0;
+//[0] = P1, [1] = P2
+var goals = [0,0]
 
 var player1 = {
     racket: document.getElementById("player1"),
@@ -70,10 +76,14 @@ function gameLogic() {
     if(isOverlapping(player1.racket, ball.ballRef)) {
         //ball.speed[1] = calculateRelativePosition(player1, ball);
         ball.speed[0] = ball.speed[0] * -speedIncrease;
+        ball.speed[1] = ball.speed[0] * (calculateRelativePosition(player1, ball)+1);
+        counter++;
     }
     else if (isOverlapping(player2.racket, ball.ballRef)) {
         //ball.speed[1] = calculateRelativePosition(player2, ball);
         ball.speed[0] = ball.speed[0] * -speedIncrease;
+        ball.speed[1] = ball.speed[0] * (calculateRelativePosition(player2, ball)+1);
+        counter++;
     }
     if(ball.ballRef.offsetTop <= 0 || (ball.ballRef.offsetTop+ball.ballRef.offsetHeight) >= board.lengthY) {
         ball.speed[1] = -ball.speed[1];
@@ -86,8 +96,8 @@ function gameLogic() {
 }
 
 function calculateRelativePosition(player, ball) {
-    var ballMiddle = ball.posY/2
-    var playerMiddle = player.posY/2
+    var ballMiddle = ball.posY/2;
+    var playerMiddle = player.posY/2;
     return (ballMiddle - playerMiddle) / player.racket.offsetHeight;
 }
 
@@ -111,8 +121,28 @@ function gameLoop() {
     if (running) {
         window.requestAnimationFrame(gameLoop);
     }
-} 
+}
 
+document.addEventListener("keydown", (event) => {
+    switch (event.code) {
+        case "KeyW":
+            if(player1.posY > 0) {
+                player1.posY -= 10;
+            }
+            else {
+                player1.posY = 0;
+            }
+            break;
+        case "KeyS":
+            if((player1.posY + player1.racket.offsetHeight) < board.lengthY) {
+                player1.posY += 10;
+            }
+            else {
+                player1.posY = (board.lengthY - player1.racket.offsetHeight);
+            }
+            break;
+    }
+});
 
 /* var pl1 = document.getElementById("player1");
 var position = 0;
