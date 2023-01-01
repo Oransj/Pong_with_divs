@@ -108,16 +108,33 @@ function updateEntities() {
     player2.racket.style.left = `${player2.posX}px`;
     ball.ballRef.style.top = `${ball.posY}px`;
     ball.ballRef.style.left = `${ball.posX}px`;
+}
 
-/*
-    player2.racket.style.transform = `translate(${player2.posX}px,${player2.posY}px)`
-    ball.ballRef.style.transform = `translate(${ball.posX}px,${ball.posY}px)` */
+function aiCalculation() {
+    var offset = calculateRelativePosition(player2, ball)
+    if(offset < -0.1) {
+        moveUp(player2);
+    }
+    if(offset > 0.1) {
+        moveDown(player2);
+    }
+}
+
+function moveUp(player) {
+    player.posY -= 10;
+}
+
+function moveDown(player) {
+    player.posY += 10;
 }
 
 var running = true;
 function gameLoop() {
     gameLogic();
     updateEntities();
+    if(singlePlayer) {
+        aiCalculation();
+    }
     if (running) {
         window.requestAnimationFrame(gameLoop);
     }
