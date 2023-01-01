@@ -1,4 +1,4 @@
-/* var playerSpeed = [1.5, 1.5]
+var playerSpeed = [1.5, 1.5]
 
 var player1 = {
     racket: document.getElementById("player1"),
@@ -18,7 +18,8 @@ var ball = {
     ballRef: document.getElementById("ball"),
     posX: 0,
     posY: 0,
-    speed: [2.5, 2.5]
+    //[0] = x, [1] = y
+    speed: [-2, 0]
 }
 
 var board = {
@@ -33,13 +34,20 @@ window.onload = function() {
 }
 
 function initialize() {
+    var distanceFromWall = 50;
     var boardObject = document.getElementById("board"); 
     board.lengthX = boardObject.offsetWidth;
     board.lengthY = boardObject.offsetHeight;
-    player1.posX = 50;
-    player1.posY = board.lengthY*0.5 - 50; //Middle of Y, then compensating for anchor by moving up by half the length of the player
-    player2.posX = board.lengthX - 75; // moving 50px away from thre right border
-    player2.posY = board.lengthY*0.5 - 150; //Middle of Y, then compensating for anchor by moving up by half the length of the player
+    player1.posX = distanceFromWall;
+    player1.posY = board.lengthY*0.5 - player1.racket.offsetHeight/2; //Centering player1 of the Y axis
+    player2.posX = board.lengthX - (player2.racket.offsetWidth + distanceFromWall); //Compensates for the origin being on the left side.
+    player2.posY = board.lengthY*0.5 - player2.racket.offsetHeight/2; //Centering player2 of the Y axis
+    ball.posY = board.lengthY/2;
+    ball.posX = board.lengthX/2;
+    if(getRndInteger(0,1) == 1) {
+        ball.speed[0] = -ball.speed[0];
+    }
+    ball.speed[1] = (getRndInteger(0, 10) - 5)/10;
     gameLoop();
 }
 
@@ -50,23 +58,50 @@ function isOverlapping(element1, element2){
             box1.left < box2.right && 
             box1.bottom > box2.top && 
             box1.top < box2.bottom)
-    }
+}
+
+function getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
 
 function gameLogic() {
-    // Checks if the ball is overlapping any of the rackets of the player
+    var speedIncrease = 1.1;
+    // Checks if the ball is overlapping any of the rackets
     if(isOverlapping(player1.racket, ball.ballRef)) {
-
+        //ball.speed[1] = calculateRelativePosition(player1, ball);
+        ball.speed[0] = ball.speed[0] * -speedIncrease;
     }
     else if (isOverlapping(player2.racket, ball.ballRef)) {
-
+        //ball.speed[1] = calculateRelativePosition(player2, ball);
+        ball.speed[0] = ball.speed[0] * -speedIncrease;
     }
+    if(ball.ballRef.offsetTop <= 0 || (ball.ballRef.offsetTop+ball.ballRef.offsetHeight) >= board.lengthY) {
+        ball.speed[1] = -ball.speed[1];
+    }
+    if(ball.ballRef.offsetLeft <= 0 || (ball.ballRef.offsetLeft + ball.ballRef.offsetWidth) >= board.lengthX) {
+        ball.speed[0] = -ball.speed[0];
+    }
+    ball.posX += ball.speed[0];
+    ball.posY += ball.speed[1];
+}
 
+function calculateRelativePosition(player, ball) {
+    var ballMiddle = ball.posY/2
+    var playerMiddle = player.posY/2
+    return (ballMiddle - playerMiddle) / player.racket.offsetHeight;
 }
 
 function updateEntities() {
- player1.racket.style.transform = `translate(${player1.posX}px,${player1.posY}px)`
- player2.racket.style.transform = `translate(${player2.posX}px,${player2.posY}px)`
- ball.ballRef.style.transform = `translate(${ball.posX}px,${ball.posY}px)`
+    player1.racket.style.top = `${player1.posY}px`;
+    player1.racket.style.left = `${player1.posX}px`;
+    player2.racket.style.top = `${player2.posY}px`;
+    player2.racket.style.left = `${player2.posX}px`;
+    ball.ballRef.style.top = `${ball.posY}px`;
+    ball.ballRef.style.left = `${ball.posX}px`;
+
+/*
+    player2.racket.style.transform = `translate(${player2.posX}px,${player2.posY}px)`
+    ball.ballRef.style.transform = `translate(${ball.posX}px,${ball.posY}px)` */
 }
 
 var running = true;
@@ -76,16 +111,16 @@ function gameLoop() {
     if (running) {
         window.requestAnimationFrame(gameLoop);
     }
-}  */
+} 
 
 
-var pl1 = document.getElementById("player1");
+/* var pl1 = document.getElementById("player1");
 var position = 0;
 var running = true;
 
 function move(time) {
     pl1.style.left = `${position}px`;
-/*     pl1.style.transform = `translateX(${position}px)`; */
+//     pl1.style.transform = `translateX(${position}px)`;
     position += 5;
     if(position > 200) {
         running = false;
@@ -96,5 +131,4 @@ function move(time) {
 }
 
 
-window.requestAnimationFrame(move);
-
+window.requestAnimationFrame(move); */
