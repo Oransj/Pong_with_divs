@@ -70,6 +70,7 @@ function getRndInteger(min, max) {
 
 function gameLogic() {
     var speedIncrease = 1.1;
+    var angle = (5/3); //This is equal to about 75 degrees
     var inHitbox = false;
     // Checks if the ball is overlapping any of the rackets
     var overlappingRacket1 = isOverlapping(player1.racket, ball.ballRef);
@@ -77,14 +78,14 @@ function gameLogic() {
     if(overlappingRacket1 && !inHitbox) {
         //ball.speed[1] = calculateRelativePosition(player1, ball);
         ball.speed[0] = ball.speed[0] * -speedIncrease;
-        ball.speed[1] = ball.speed[0] * (calculateRelativePosition(player1, ball)+1);
+        ball.speed[1] = Math.abs(ball.speed[0]) * (calculateRelativePosition(player1, ball)*angle);
         counter++;
         inHitbox = true;
     }
     else if (overlappingRacket2 && !inHitbox) {
         //ball.speed[1] = calculateRelativePosition(player2, ball);
         ball.speed[0] = ball.speed[0] * -speedIncrease;
-        ball.speed[1] = ball.speed[0] * (calculateRelativePosition(player2, ball)+1);
+        ball.speed[1] = Math.abs(ball.speed[0]) * (calculateRelativePosition(player2, ball)*angle);
         counter++;
         inHitbox = true;
     } else if (!overlappingRacket1 && !overlappingRacket2){
