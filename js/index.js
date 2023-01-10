@@ -44,9 +44,7 @@ function initialize() {
     var boardObject = document.getElementById("board"); 
     board.lengthX = boardObject.offsetWidth;
     board.lengthY = boardObject.offsetHeight;
-    player1.posX = distanceFromWall;
     player1.posY = board.lengthY*0.5 - player1.racket.offsetHeight/2; //Centering player1 of the Y axis
-    player2.posX = board.lengthX - (player2.racket.offsetWidth + distanceFromWall); //Compensates for the origin being on the left side.
     player2.posY = board.lengthY*0.5 - player2.racket.offsetHeight/2; //Centering player2 of the Y axis
     ball.posY = board.lengthY/2;
     ball.posX = board.lengthX/2;
@@ -110,9 +108,7 @@ function calculateRelativePosition(player, ball) {
 
 function updateEntities() {
     player1.racket.style.top = `${player1.posY}px`;
-    player1.racket.style.left = `${player1.posX}px`;
     player2.racket.style.top = `${player2.posY}px`;
-    player2.racket.style.left = `${player2.posX}px`;
     ball.ballRef.style.top = `${ball.posY}px`;
     ball.ballRef.style.left = `${ball.posX}px`;
 }

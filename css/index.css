@@ -1,3 +1,9 @@
+:root {
+    --player-x-offset: 50px;
+    --board-width: 1632px;
+    --racket-width: 25px;
+}
+
 body {
     margin: 0;
     height: 100vh;
@@ -19,7 +25,7 @@ main {
     /* height: 85vh;
     width: 85vw; */
     height: 918px;
-    width: 1632px;
+    width: var(--board-width);
 
     background-color: rgb(0, 0, 0);
     border: 1px solid black;
@@ -28,9 +34,17 @@ main {
 .player {
     position: absolute;
     height: 100px;
-    width: 25px;
+    width: var(--racket-width);
     background-color: rgb(255, 255, 255);
     /* border: 1px solid black; */
+}
+
+#player1 {
+    left: var(--player-x-offset);
+}
+
+#player2 {
+    left: calc(var(--board-width) - var(--player-x-offset) - var(--racket-width));
 }
 
 #ball {
