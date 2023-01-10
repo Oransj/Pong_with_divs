@@ -72,18 +72,25 @@ function getRndInteger(min, max) {
 
 function gameLogic() {
     var speedIncrease = 1.1;
+    var inHitbox = false;
     // Checks if the ball is overlapping any of the rackets
-    if(isOverlapping(player1.racket, ball.ballRef)) {
+    var overlappingRacket1 = isOverlapping(player1.racket, ball.ballRef);
+    var overlappingRacket2 = isOverlapping(player2.racket, ball.ballRef);
+    if(overlappingRacket1 && !inHitbox) {
         //ball.speed[1] = calculateRelativePosition(player1, ball);
         ball.speed[0] = ball.speed[0] * -speedIncrease;
         ball.speed[1] = ball.speed[0] * (calculateRelativePosition(player1, ball)+1);
         counter++;
+        inHitbox = true;
     }
-    else if (isOverlapping(player2.racket, ball.ballRef)) {
+    else if (overlappingRacket2 && !inHitbox) {
         //ball.speed[1] = calculateRelativePosition(player2, ball);
         ball.speed[0] = ball.speed[0] * -speedIncrease;
         ball.speed[1] = ball.speed[0] * (calculateRelativePosition(player2, ball)+1);
         counter++;
+        inHitbox = true;
+    } else if (!overlappingRacket1 && !overlappingRacket2){
+        inHitbox = false;
     }
     if(ball.ballRef.offsetTop <= 0 || (ball.ballRef.offsetTop+ball.ballRef.offsetHeight) >= board.lengthY) {
         ball.speed[1] = -ball.speed[1];
@@ -160,6 +167,12 @@ document.addEventListener("keydown", (event) => {
             break;
     }
 });
+
+/* $(window).resize(function() {
+    var boardObject = document.getElementById("board"); 
+    boardObject.style.height = `${window.innerHeight}px`;
+    boardObject.style.width = `${window.innerWidth}px`;
+  }); */
 
 /* var pl1 = document.getElementById("player1");
 var position = 0;
