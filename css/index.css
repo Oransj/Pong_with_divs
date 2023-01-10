@@ -16,8 +16,10 @@ main {
 #board {
     position: relative;
     margin: 0;
-    height: 85vh;
-    width: 85vw;
+    /* height: 85vh;
+    width: 85vw; */
+    height: 918px;
+    width: 1632px;
 
     background-color: rgb(0, 0, 0);
     border: 1px solid black;
