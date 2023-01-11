@@ -102,8 +102,8 @@ function gameLogic() {
 }
 
 function calculateRelativePosition(player, ball) {
-    var ballMiddle = ball.posY/2;
-    var playerMiddle = player.posY/2;
+    var ballMiddle = ball.posY + (ball.ballRef.offsetHeight/2);
+    var playerMiddle = player.posY + (player.racket.offsetHeight/2);
     return (ballMiddle - playerMiddle) / player.racket.offsetHeight;
 }
 
@@ -165,7 +165,9 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-/* $(window).resize(function() {
+/* 
+    NEED JQUERY FOR THIS
+$(window).resize(function() {
     var boardObject = document.getElementById("board"); 
     boardObject.style.height = `${window.innerHeight}px`;
     boardObject.style.width = `${window.innerWidth}px`;
