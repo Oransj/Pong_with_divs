@@ -67,7 +67,7 @@ function isOverlapping(element1, element2){
 function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
-
+var hits = 0;
 function gameLogic() {
     var speedIncrease = 1.1;
     var angle = (5/3); //This is equal to about 75 degrees
@@ -79,6 +79,7 @@ function gameLogic() {
         //ball.speed[1] = calculateRelativePosition(player1, ball);
         ball.speed[0] = ball.speed[0] * -speedIncrease;
         ball.speed[1] = Math.abs(ball.speed[0]) * (calculateRelativePosition(player1, ball)*angle);
+        hits++;
         counter++;
         inHitbox = true;
     }
@@ -86,6 +87,7 @@ function gameLogic() {
         //ball.speed[1] = calculateRelativePosition(player2, ball);
         ball.speed[0] = ball.speed[0] * -speedIncrease;
         ball.speed[1] = Math.abs(ball.speed[0]) * (calculateRelativePosition(player2, ball)*angle);
+        hits++;
         counter++;
         inHitbox = true;
     } else if (!overlappingRacket1 && !overlappingRacket2){
@@ -112,6 +114,11 @@ function updateEntities() {
     player2.racket.style.top = `${player2.posY}px`;
     ball.ballRef.style.top = `${ball.posY}px`;
     ball.ballRef.style.left = `${ball.posX}px`;
+
+    //Part under is only for debugging purposes
+    const debugText = document.getElementById("debug-text");
+    var estimatedSpeed = -2 * Math.pow(1.1, counter);
+    debugText.innerText = `Est. Speed ${estimatedSpeed}. Act.speed ${ball.speed[0]}. Angle ${hits}. `;
 }
 
 function aiCalculation() {

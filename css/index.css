@@ -4,6 +4,14 @@
     --racket-width: 25px;
 }
 
+#debug-text {
+    position: absolute;
+    color: white;
+    font-family: sans-serif;
+    top: 890px;
+    padding-left: 20px;
+}
+
 body {
     margin: 0;
     height: 100vh;
