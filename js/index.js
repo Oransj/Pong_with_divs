@@ -25,7 +25,7 @@ var ball = {
     posX: 0,
     posY: 0,
     //[0] = x, [1] = y
-    speed: [-2, 0]
+    speed: [-3, 0]
 }
 
 var board = {
@@ -69,7 +69,7 @@ function getRndInteger(min, max) {
 }
 var hits = 0;
 function gameLogic() {
-    var speedIncrease = 1.1;
+    var speedIncrease = 0.1;
     var angle = (5/3); //This is equal to about 75 degrees
     var inHitbox = false;
     // Checks if the ball is overlapping any of the rackets
@@ -77,7 +77,7 @@ function gameLogic() {
     var overlappingRacket2 = isOverlapping(player2.racket, ball.ballRef);
     if(overlappingRacket1 && !inHitbox) {
         //ball.speed[1] = calculateRelativePosition(player1, ball);
-        ball.speed[0] = ball.speed[0] * -speedIncrease;
+        ball.speed[0] = ball.speed[0] * -1 + speedIncrease;
         ball.speed[1] = Math.abs(ball.speed[0]) * (calculateRelativePosition(player1, ball)*angle);
         hits++;
         counter++;
@@ -85,7 +85,7 @@ function gameLogic() {
     }
     else if (overlappingRacket2 && !inHitbox) {
         //ball.speed[1] = calculateRelativePosition(player2, ball);
-        ball.speed[0] = ball.speed[0] * -speedIncrease;
+        ball.speed[0] = ball.speed[0] * -1 - speedIncrease;
         ball.speed[1] = Math.abs(ball.speed[0]) * (calculateRelativePosition(player2, ball)*angle);
         hits++;
         counter++;
@@ -117,8 +117,8 @@ function updateEntities() {
 
     //Part under is only for debugging purposes
     const debugText = document.getElementById("debug-text");
-    var estimatedSpeed = -2 * Math.pow(1.1, counter);
-    debugText.innerText = `Est. Speed ${estimatedSpeed}. Act.speed ${ball.speed[0]}. Angle ${hits}. `;
+    var estimatedSpeed = -3 * Math.pow(-1, counter) - 0.1*counter*Math.pow(-1, counter);
+    debugText.innerText = `Est. Speed ${estimatedSpeed}. Act.speed ${ball.speed[0]}. Hits ${hits}. `;
 }
 
 function aiCalculation() {
