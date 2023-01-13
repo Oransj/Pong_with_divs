@@ -96,7 +96,7 @@ function gameLogic() {
         hits++;
         inHitbox = true;
         if(singlePlayer) {
-            hitArea = getRndInteger(0, 5)/10;
+            hitArea = getRndInteger(1, 5)/10;
         }
     } else if (!overlappingRacket1 && !overlappingRacket2){
         inHitbox = false;
@@ -104,9 +104,15 @@ function gameLogic() {
     if(ball.ballRef.offsetTop <= 0 || (ball.ballRef.offsetTop+ball.ballRef.offsetHeight) >= board.lengthY) {
         ball.speed[1] = -ball.speed[1];
     }
-    if(ball.ballRef.offsetLeft <= 0 || (ball.ballRef.offsetLeft + ball.ballRef.offsetWidth) >= board.lengthX) {
+
+    if(ball.ballRef.offsetLeft <= 0) {
+        ball.speed[0] = -ball.speed[0];
+        running = false;
+    }
+    if((ball.ballRef.offsetLeft + ball.ballRef.offsetWidth) >= board.lengthX) {
         ball.speed[0] = -ball.speed[0];
     }
+    
     ball.posX += ball.speed[0];
     ball.posY += ball.speed[1];
 }

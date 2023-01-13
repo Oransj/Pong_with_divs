@@ -64,6 +64,7 @@ main {
 
 #ball {
     position: absolute;
+    left: calc(var(--board-width) / 2);
     height: 25px;
     width: 25px;
     background-color: rgb(255, 255, 255);
