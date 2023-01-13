@@ -2,6 +2,10 @@ var playerSpeed = [1.5, 1.5];
 
 var singlePlayer = true;
 
+var hits = 0;
+
+var hitArea = 0.1;
+
 var counter = 0;
 //[0] = P1, [1] = P2
 var goals = [0,0]
@@ -35,6 +39,8 @@ var board = {
     lengthY: 0
 }
 
+const hitText = document.getElementById("hit-text");
+
 window.onload = function() {
     initialize();
 }
@@ -51,7 +57,7 @@ function initialize() {
     if(getRndInteger(0,1) == 1) {
         ball.speed[0] = -ball.speed[0];
     }
-    ball.speed[1] = (getRndInteger(0, 10) - 5)/10;
+    ball.speed[1] = (getRndInteger(0, 9) - 5)/10;
     gameLoop();
 }
 
@@ -67,7 +73,7 @@ function isOverlapping(element1, element2){
 function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
-var hits = 0;
+
 function gameLogic() {
     var speedIncrease = 0.1;
     var angle = (5/3); //This is equal to about 75 degrees
@@ -88,8 +94,10 @@ function gameLogic() {
         ball.speed[0] = ball.speed[0] * -1 - speedIncrease;
         ball.speed[1] = Math.abs(ball.speed[0]) * (calculateRelativePosition(player2, ball)*angle);
         hits++;
-        counter++;
         inHitbox = true;
+        if(singlePlayer) {
+            hitArea = getRndInteger(0, 5)/10;
+        }
     } else if (!overlappingRacket1 && !overlappingRacket2){
         inHitbox = false;
     }
@@ -109,34 +117,48 @@ function calculateRelativePosition(player, ball) {
     return (ballMiddle - playerMiddle) / player.racket.offsetHeight;
 }
 
-function updateEntities() {
+function updateMovableEntities() {
     player1.racket.style.top = `${player1.posY}px`;
     player2.racket.style.top = `${player2.posY}px`;
     ball.ballRef.style.top = `${ball.posY}px`;
     ball.ballRef.style.left = `${ball.posX}px`;
+}
+
+function updateTextEntities() {
+    hitText.innerText = `${counter}`
+}
+
+function updateEntities() {
+
+    updateMovableEntities();
+    updateTextEntities();
 
     //Part under is only for debugging purposes
     const debugText = document.getElementById("debug-text");
     var estimatedSpeed = -3 * Math.pow(-1, counter) - 0.1*counter*Math.pow(-1, counter);
-    debugText.innerText = `Est. Speed ${estimatedSpeed}. Act.speed ${ball.speed[0]}. Hits ${hits}. `;
+    debugText.innerText = `Est. Speed ${estimatedSpeed}. Act.speed ${ball.speed[0]}. Hits ${hits}. AI focus ${hitArea}. relative position ${calculateRelativePosition(player2, ball)}`;
 }
 
 function aiCalculation() {
-    var offset = calculateRelativePosition(player2, ball)
-    if(offset < -0.1) {
+    var offset = calculateRelativePosition(player2, ball);
+    if(offset < -hitArea) {
         moveUp(player2);
     }
-    if(offset > 0.1) {
+    if(offset > hitArea) {
         moveDown(player2);
     }
 }
 
 function moveUp(player) {
-    player.posY -= 10;
+    if (player.posY > 0) {
+        player.posY -= 10;
+    }
 }
 
 function moveDown(player) {
-    player.posY += 10;
+    if(player.posY + player.racket.offsetHeight < board.lengthY) {
+        player.posY += 10;
+    }
 }
 
 var running = true;
