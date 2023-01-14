@@ -27,6 +27,28 @@ main {
     position: relative;
 }
 
+.menu-wrapper {
+    /* position: absolute; */
+}
+
+.hamburger-menu-button {
+    /* position: absolute; */
+    font-size: 26px;
+    cursor: pointer;
+}
+
+#toggle-checkbox {
+    /* display: none; */
+}
+
+#toggle-checkbox:checked ~ .top-down-menu {
+    display: block;
+}
+
+.top-down-menu {
+    list-style-type: none;
+    display: none;
+}
 .score-board {
     position: absolute;
     left: 50vw;
