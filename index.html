@@ -10,17 +10,20 @@
 </head>
 <body>
     <div class="menu-wrapper">
-        <label clfor="toggle" class="hamburger-menu-button">&#9776</label>
+        <label for="toggle-checkbox" class="hamburger-menu-button">&#9776</label>
         <input type="checkbox" id="toggle-checkbox">
         <ul class="top-down-menu">
             <li id="title">
                 Pong with divs
             </li>
             <li class="mode-button" id="singleplayer-button">
-                <a href="#">Singleplayer</a>
+                <button>Singleplayer</button>
             </li>
             <li class="mode-button" id="multiplayer-button">
-                <a href="#">Multiplayer</a>
+                <button>Multiplayer</button>
+            </li>
+            <li class="mode-button" id="reset-button">
+                <button onclick="initialize()">Restart</button>
             </li>
         </ul>
     </div>

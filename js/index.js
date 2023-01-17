@@ -7,6 +7,8 @@ var hits = 0;
 var hitArea = 0.1;
 
 var counter = 0;
+
+var running = true;
 //[0] = P1, [1] = P2
 var goals = [0,0]
 
@@ -46,19 +48,25 @@ window.onload = function() {
 }
 
 function initialize() {
-    var distanceFromWall = 50;
-    var boardObject = document.getElementById("board"); 
+    reset();
+    if(getRndInteger(0,1) == 1) {
+        ball.speed[0] = -ball.speed[0];
+    }
+    ball.speed[1] = (getRndInteger(0, 9) - 5)/10;
+    running = true;
+    gameLoop();
+}
+
+function reset() {
+    var boardObject = document.getElementById("board");
     board.lengthX = boardObject.offsetWidth;
     board.lengthY = boardObject.offsetHeight;
     player1.posY = board.lengthY*0.5 - player1.racket.offsetHeight/2; //Centering player1 of the Y axis
     player2.posY = board.lengthY*0.5 - player2.racket.offsetHeight/2; //Centering player2 of the Y axis
     ball.posY = board.lengthY/2;
     ball.posX = board.lengthX/2;
-    if(getRndInteger(0,1) == 1) {
-        ball.speed[0] = -ball.speed[0];
-    }
-    ball.speed[1] = (getRndInteger(0, 9) - 5)/10;
-    gameLoop();
+    ball.speed[0] = -3;
+    ball.speed[1] = 0;
 }
 
 function isOverlapping(element1, element2){
@@ -167,7 +175,6 @@ function moveDown(player) {
     }
 }
 
-var running = true;
 function gameLoop() {
     gameLogic();
     updateEntities();

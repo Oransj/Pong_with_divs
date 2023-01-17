@@ -28,17 +28,18 @@ main {
 }
 
 .menu-wrapper {
-    /* position: absolute; */
+    position: absolute;
+    z-index: 1;
 }
 
 .hamburger-menu-button {
-    /* position: absolute; */
+    position: absolute;
     font-size: 26px;
     cursor: pointer;
 }
 
 #toggle-checkbox {
-    /* display: none; */
+    display: none;
 }
 
 #toggle-checkbox:checked ~ .top-down-menu {
@@ -48,6 +49,22 @@ main {
 .top-down-menu {
     list-style-type: none;
     display: none;
+    border: 1px solid black;
+    background-color: white;
+    z-index: 1;
+    min-height: 10rem;
+}
+
+#title {
+    font-size: 24px;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.mode-button {
+    font-size: 18px;
+    font-family: sans-serif;
+    padding-top: 0.5rem;
 }
 .score-board {
     position: absolute;
