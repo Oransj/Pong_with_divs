@@ -45,6 +45,9 @@ var highScore = 0;
 
 window.onload = function() {
     highScore = localStorage.getItem('pongHighScore');
+    if (highScore == null) {
+        highScore = 0;
+    }
     highscoreText.innerText = `${highScore}`;
     initialize();
 }
