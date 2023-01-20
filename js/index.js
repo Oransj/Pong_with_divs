@@ -31,7 +31,7 @@ var ball = {
     posX: 0,
     posY: 0,
     //[0] = x, [1] = y
-    speed: [-3, 0]
+    speed: [3, 0]
 }
 
 var board = {
@@ -65,7 +65,7 @@ function reset() {
     player2.posY = board.lengthY*0.5 - player2.racket.offsetHeight/2; //Centering player2 of the Y axis
     ball.posY = board.lengthY/2;
     ball.posX = board.lengthX/2;
-    ball.speed[0] = -3;
+    ball.speed[0] = 3;
     ball.speed[1] = 0;
 }
 
