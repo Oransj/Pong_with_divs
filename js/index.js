@@ -6,8 +6,6 @@ var hits = 0;
 
 var hitArea = 0.1;
 
-var counter = 0;
-
 var running = true;
 //[0] = P1, [1] = P2
 var goals = [0,0]
@@ -42,8 +40,12 @@ var board = {
 }
 
 const hitText = document.getElementById("hit-text");
+const highscoreText = document.getElementsByClassName("highscore-text")[0];
+var highScore = 0;
 
 window.onload = function() {
+    highScore = localStorage.getItem('pongHighScore');
+    highscoreText.innerText = `${highScore}`;
     initialize();
 }
 
@@ -67,6 +69,17 @@ function reset() {
     ball.posX = board.lengthX/2;
     ball.speed[0] = 3;
     ball.speed[1] = 0;
+    hits = 0;
+    updateTextEntities();
+}
+
+function calculateHighscore() {
+    if (hits > highScore) {
+        highScore = hits;
+        localStorage.setItem('pongHighScore', highScore);
+        highscoreText.innerText = `${highScore}`
+        updateTextEntities();
+    }
 }
 
 function isOverlapping(element1, element2){
@@ -94,14 +107,12 @@ function gameLogic() {
         ball.speed[0] = ball.speed[0] * -1 + speedIncrease;
         ball.speed[1] = Math.abs(ball.speed[0]) * (calculateRelativePosition(player1, ball)*angle);
         hits++;
-        counter++;
         inHitbox = true;
     }
     else if (overlappingRacket2 && !inHitbox) {
         //ball.speed[1] = calculateRelativePosition(player2, ball);
         ball.speed[0] = ball.speed[0] * -1 - speedIncrease;
         ball.speed[1] = Math.abs(ball.speed[0]) * (calculateRelativePosition(player2, ball)*angle);
-        hits++;
         inHitbox = true;
         if(singlePlayer) {
             hitArea = getRndInteger(1, 5)/10;
@@ -139,7 +150,7 @@ function updateMovableEntities() {
 }
 
 function updateTextEntities() {
-    hitText.innerText = `${counter}`
+    hitText.innerText = `${hits}`
 }
 
 function updateEntities() {
@@ -149,7 +160,7 @@ function updateEntities() {
 
     //Part under is only for debugging purposes
     const debugText = document.getElementById("debug-text");
-    var estimatedSpeed = -3 * Math.pow(-1, counter) - 0.1*counter*Math.pow(-1, counter);
+    var estimatedSpeed = -3 * Math.pow(-1, hits) - 0.1*hits*Math.pow(-1, hits);
     debugText.innerText = `Est. Speed ${estimatedSpeed}. Act.speed ${ball.speed[0]}. Hits ${hits}. AI focus ${hitArea}. relative position ${calculateRelativePosition(player2, ball)}`;
 }
 
@@ -183,7 +194,10 @@ function gameLoop() {
     }
     if (running) {
         window.requestAnimationFrame(gameLoop);
+    } else {
+        calculateHighscore();
     }
+    
 }
 
 document.addEventListener("keydown", (event) => {

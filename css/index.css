@@ -83,6 +83,15 @@ main {
     display: flex;
 }
 
+.score-board > p {
+    font-family: 'Calibri', 'Arial', sans-serif;
+    font-size: 24px;
+}
+
+.highscore-board {
+    padding-top: 24px;
+}
+
 #board {
     position: relative;
     margin: 0;
