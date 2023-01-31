@@ -74,6 +74,7 @@ function reset() {
     ball.speed[1] = 0;
     hits = 0;
     updateTextEntities();
+    running = false;
 }
 
 function calculateHighscore() {
