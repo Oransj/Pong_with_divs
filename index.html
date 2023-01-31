@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,13 +9,14 @@
     <script defer src="js/index.js"></script>
     <title>Pong</title>
 </head>
+
 <body>
     <div class="menu-wrapper">
         <label for="toggle-checkbox" class="hamburger-menu-button">&#9776</label>
         <input type="checkbox" id="toggle-checkbox">
         <ul class="top-down-menu">
-            <li class="title">
-                Pong with divs
+            <li>
+                <h1 class="title">Pong with divs</h1>
             </li>
             <li class="mode-button" id="singleplayer-button">
                 <button>Singleplayer</button>
@@ -28,12 +30,12 @@
         </ul>
     </div>
     <div class="score-board">
-        <p>Hits: </p>
-        <p id="hit-text">0</p>
+        <pre>Hits: </pre>
+        <pre id="hit-text">0</pre>
     </div>
     <div class="score-board highscore-board">
-        <p>Highscore:</p>
-        <p class="highscore-text">0</p>
+        <pre>Highscore:</pre>
+        <pre class="highscore-text">0</pre>
     </div>
     <main>
         <!-- Board -->
@@ -46,4 +48,5 @@
         </div>
     </main>
 </body>
+
 </html>
