@@ -38,8 +38,10 @@ main {
     display: inline-block;
     font-size: 26px;
     cursor: pointer;
-    margin: 0.5em;
+    padding: 0.5em;
     z-index: 1;
+    user-select: none;
+    -webkit-touch-callout: none;
 }
 
 #toggle-checkbox {
@@ -49,6 +51,9 @@ main {
 #toggle-checkbox:checked~.top-down-menu {
     display: flex;
     animation: show-menu 1000ms;
+.hamburger-menu-button:hover {
+    background-color: black;
+    color: white;
 }
 
 #toggle-checkbox:not(:checked)~.top-down-menu {
