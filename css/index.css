@@ -51,7 +51,7 @@ main {
     animation: show-menu 1000ms;
 }
 
-#toggle-chackbox:not(:checked) ~ .top-down-menu {
+#toggle-checkbox:not(:checked) ~ .top-down-menu {
     animation: hide-menu 1000ms;
 }
 
