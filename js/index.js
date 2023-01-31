@@ -41,6 +41,8 @@ var board = {
 
 const hitText = document.getElementById("hit-text");
 const highscoreText = document.getElementsByClassName("highscore-text")[0];
+const menu = document.getElementsByClassName("top-down-menu")[0];
+const menuToggle = document.getElementById("toggle-checkbox");
 var highScore = 0;
 
 window.onload = function() {
@@ -161,11 +163,6 @@ function updateEntities() {
 
     updateMovableEntities();
     updateTextEntities();
-
-    //Part under is only for debugging purposes
-    const debugText = document.getElementById("debug-text");
-    var estimatedSpeed = -3 * Math.pow(-1, hits) - 0.1*hits*Math.pow(-1, hits);
-    debugText.innerText = `Est. Speed ${estimatedSpeed}. Act.speed ${ball.speed[0]}. Hits ${hits}. AI focus ${hitArea}. relative position ${calculateRelativePosition(player2, ball)}`;
 }
 
 function aiCalculation() {
@@ -225,29 +222,19 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-/* 
-    NEED JQUERY FOR THIS
-$(window).resize(function() {
-    var boardObject = document.getElementById("board"); 
-    boardObject.style.height = `${window.innerHeight}px`;
-    boardObject.style.width = `${window.innerWidth}px`;
-  }); */
+menuToggle.addEventListener('click', () => {
+    const open = menu.getAttribute('data-state') == "opened";
+    if (open ? closeMenu() : openMenu());
+});
 
-/* var pl1 = document.getElementById("player1");
-var position = 0;
-var running = true;
-
-function move(time) {
-    pl1.style.left = `${position}px`;
-//     pl1.style.transform = `translateX(${position}px)`;
-    position += 5;
-    if(position > 200) {
-        running = false;
-    }
-    if(running) {
-        window.requestAnimationFrame(move);
-    }
+function openMenu() {
+    menu.setAttribute('data-state', "opened");
 }
+function closeMenu() {
+    menu.setAttribute('data-state', "closing");
 
-
-window.requestAnimationFrame(move); */
+    menu.addEventListener('animationend', () => {
+        menu.setAttribute('data-state', "closed");
+        console.log("Closed")
+    }, {once: true});
+}
