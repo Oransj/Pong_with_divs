@@ -122,6 +122,9 @@ main {
 .mode-button>button {
     /* position: absolute; */
     display: block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 
     font-size: 18px;
     font-family: sans-serif;
@@ -132,6 +135,7 @@ main {
     border: none;
 
     padding: 1rem;
+    margin: 0.5rem;
     width: 150px;
 
 }
